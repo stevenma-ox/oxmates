@@ -1,34 +1,167 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* App-specific styles */
+.App {
+  min-height: 100vh;
+  background-color: #060A11;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+/* Profile card styles */
+.profile-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 75vh;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.profile-card-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(6, 10, 17, 0.95), transparent);
 }
 
-.App-link {
-    color: #61dafb;
+/* Bottom navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5rem;
+  background: rgba(11, 19, 32, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1.5rem;
+  z-index: 50;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Swipe action buttons */
+.swipe-btn {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.swipe-btn:hover {
+  transform: scale(1.1);
+}
+
+.swipe-btn-pass {
+  background: rgba(239, 68, 68, 0.2);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+}
+
+.swipe-btn-pass:hover {
+  background: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.swipe-btn-like {
+  background: rgba(34, 197, 94, 0.2);
+  border: 2px solid rgba(34, 197, 94, 0.5);
+  color: #22c55e;
+}
+
+.swipe-btn-like:hover {
+  background: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.swipe-btn-super {
+  background: rgba(212, 175, 55, 0.2);
+  border: 2px solid rgba(212, 175, 55, 0.5);
+  color: #D4AF37;
+}
+
+.swipe-btn-super:hover {
+  background: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Message bubble styles */
+.message-sent {
+  background: linear-gradient(135deg, #D4AF37, #B5952F);
+  color: #060A11;
+  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+}
+
+.message-received {
+  background: rgba(255, 255, 255, 0.1);
+  color: #F9F9F9;
+  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+}
+
+/* Event card styles */
+.event-card {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #0B1320;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.event-card-image {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+}
+
+/* Auth page styles */
+.auth-background {
+  background-image: url('https://images.unsplash.com/photo-1729751024295-0fc6c6d82a3d?w=1920');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.auth-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(6, 10, 17, 0.7), rgba(6, 10, 17, 0.95));
+}
+
+/* Match animation */
+@keyframes matchHeart {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.match-heart {
+  animation: matchHeart 0.6s ease-out forwards;
+}
+
+/* Icebreaker sparkle */
+@keyframes sparkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #0B1320 25%, #1a2535 50%, #0B1320 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
