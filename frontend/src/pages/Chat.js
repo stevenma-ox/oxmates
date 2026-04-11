@@ -170,24 +170,28 @@ export default function Chat() {
           </div>
         ) : (
           <div className="space-y-4">
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex ${msg.sender_id === user._id ? 'justify-end' : 'justify-start'}`}
-              >
+            {messages.map((msg) => {
+              const myId = user._id || user.id;
+              const isMine = msg.sender_id === myId;
+              return (
                 <div
-                  className={`max-w-[75%] px-4 py-3 ${
-                    msg.sender_id === user._id ? 'message-sent' : 'message-received'
-                  }`}
-                  data-testid={`message-${msg.id}`}
+                  key={msg.id}
+                  className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}
                 >
-                  <p className="text-sm">{msg.content}</p>
-                  <p className={`text-xs mt-1 ${msg.sender_id === user._id ? 'text-black/50' : 'text-white/50'}`}>
-                    {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </p>
+                  <div
+                    className={`max-w-[75%] px-4 py-3 ${
+                      isMine ? 'message-sent' : 'message-received'
+                    }`}
+                    data-testid={`message-${msg.id}`}
+                  >
+                    <p className="text-sm">{msg.content}</p>
+                    <p className={`text-xs mt-1 ${isMine ? 'text-black/50' : 'text-white/50'}`}>
+                      {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             <div ref={messagesEndRef} />
           </div>
         )}
