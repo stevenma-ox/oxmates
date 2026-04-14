@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { Heart, X, Star, MapPin, GraduationCap, Sparkles, Filter } from 'lucide-react';
+import { Heart, X, MapPin, GraduationCap, Sparkles, Filter } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
@@ -238,29 +238,22 @@ export default function Discover() {
           )}
         </div>
 
-        {/* Action buttons */}
+        {/* Action buttons - Only Pass and Like */}
         {profiles.length > 0 && (
-          <div className="flex justify-center gap-6 mt-6">
+          <div className="flex justify-center gap-8 mt-6">
             <button
               onClick={() => handleSwipe('pass')}
               className="swipe-btn swipe-btn-pass"
               data-testid="swipe-pass-btn"
             >
-              <X size={28} strokeWidth={2} />
-            </button>
-            <button
-              onClick={() => handleSwipe('like')}
-              className="swipe-btn swipe-btn-super"
-              data-testid="swipe-super-btn"
-            >
-              <Star size={28} strokeWidth={2} />
+              <X size={32} strokeWidth={2} />
             </button>
             <button
               onClick={() => handleSwipe('like')}
               className="swipe-btn swipe-btn-like"
               data-testid="swipe-like-btn"
             >
-              <Heart size={28} strokeWidth={2} />
+              <Heart size={32} strokeWidth={2} />
             </button>
           </div>
         )}
