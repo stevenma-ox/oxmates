@@ -344,15 +344,32 @@ async def swipe(action: SwipeAction, request: Request):
     user = await get_current_user(request)
     user_id = user["_id"]
     target_id = action.target_user_id
+    
+    # Check if already swiped on this user
+    existing_swipe = await db.swipes.find_one({"user_id": user_id, "target_id": target_id})
+    if existing_swipe:
+        return {"matched": False, "already_swiped": True}
+    
     await db.swipes.insert_one({
         "user_id": user_id,
         "target_id": target_id,
         "action": action.action,
         "created_at": datetime.now(timezone.utc).isoformat()
     })
+    
     if action.action == "like":
         reverse = await db.swipes.find_one({"user_id": target_id, "target_id": user_id, "action": "like"})
         if reverse:
+            # Check if match already exists between these two users
+            existing_match = await db.matches.find_one({
+                "$or": [
+                    {"user1_id": user_id, "user2_id": target_id},
+                    {"user1_id": target_id, "user2_id": user_id}
+                ]
+            })
+            if existing_match:
+                return {"matched": True, "match_id": existing_match["id"]}
+            
             match_id = str(uuid.uuid4())
             await db.matches.insert_one({
                 "id": match_id,
@@ -369,8 +386,13 @@ async def get_matches(request: Request):
     user_id = user["_id"]
     matches = await db.matches.find({"$or": [{"user1_id": user_id}, {"user2_id": user_id}]}).to_list(100)
     result = []
+    seen_users = set()  # Track users we've already added to prevent duplicates
     for m in matches:
         other_id = m["user2_id"] if m["user1_id"] == user_id else m["user1_id"]
+        # Skip if we've already added this user (deduplication)
+        if other_id in seen_users:
+            continue
+        seen_users.add(other_id)
         other_user = await db.users.find_one({"_id": ObjectId(other_id)}, {"_id": 0, "password_hash": 0})
         if other_user:
             other_user["id"] = other_id
