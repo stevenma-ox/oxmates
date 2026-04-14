@@ -203,19 +203,17 @@ export default function Discover() {
         </div>
       </div>
 
-      {/* Card stack */}
+      {/* Card - one person at a time */}
       <div className="pt-24 px-6 pb-32">
         <div className="relative max-w-md mx-auto" style={{ height: '70vh' }}>
           {profiles.length > 0 ? (
-            <AnimatePresence>
-              {profiles.slice(0, 2).map((profile, i) => (
-                <ProfileCard
-                  key={profile.id}
-                  profile={profile}
-                  isTop={i === 0}
-                  onSwipe={handleSwipe}
-                />
-              ))}
+            <AnimatePresence mode="wait">
+              <ProfileCard
+                key={profiles[0].id}
+                profile={profiles[0]}
+                isTop={true}
+                onSwipe={handleSwipe}
+              />
             </AnimatePresence>
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-center">
